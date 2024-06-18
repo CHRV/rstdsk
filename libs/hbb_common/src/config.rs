@@ -1947,20 +1947,12 @@ fn is_option_can_save(
 
 #[inline]
 pub fn is_incoming_only() -> bool {
-    HARD_SETTINGS
-        .read()
-        .unwrap()
-        .get("conn-type")
-        .map_or(false, |x| x == ("incoming"))
+    cfg!(feature = "incoming") && cfg!(not(feature = "outgoing"))
 }
 
 #[inline]
 pub fn is_outgoing_only() -> bool {
-    HARD_SETTINGS
-        .read()
-        .unwrap()
-        .get("conn-type")
-        .map_or(false, |x| x == ("outgoing"))
+    cfg!(feature = "outgoing") && cfg!(not(feature = "incoming"))
 }
 
 #[inline]
